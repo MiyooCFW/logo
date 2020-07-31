@@ -20,7 +20,7 @@
 // delay until the logo starts being visible (unit: frames) (60 frames = 1 sec)
 #define ANIMDELAY 60
 
-// time from the moment the logo stops moving and sound is played until the logo app closes (unit: milliseconds)
+// time from the moment the logo stops moving and sound is played until the logo app closes (unit: frames) (60 frames = 1 sec)
 #define ENDDELAY 3000
 
 //speed at which the logo moves (unit: pixels per frame)
@@ -43,9 +43,12 @@ int main(int argc, char* argv[]) {
 
 #ifdef VERSION_POCKETGO
 	RWops = SDL_RWFromMem(png_logo_pocketgo, sizeof(png_logo_pocketgo));
+#elif VERSION_POWKIDDY
+	RWops = SDL_RWFromMem(png_logo_powkiddy, sizeof(png_logo_powkiddy));
 #else
 	RWops = SDL_RWFromMem(png_logo_bittboy, sizeof(png_logo_bittboy));
 #endif
+	
     logoimg = IMG_LoadPNG_RW(RWops);
     if (!logoimg) {
     	printf("Error loading logo: %s\n", IMG_GetError());
