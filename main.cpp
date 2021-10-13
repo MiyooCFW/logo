@@ -42,11 +42,11 @@ int main(int argc, char* argv[]) {
 	SDL_Surface *logoimg;
 
 #ifdef VERSION_POCKETGO
-	RWops = SDL_RWFromMem(png_logo_pocketgo, sizeof(png_logo_pocketgo));
+	RWops = SDL_RWFromConstMem(png_logo_pocketgo, sizeof(png_logo_pocketgo));
 #elif VERSION_POWKIDDY
-	RWops = SDL_RWFromMem(png_logo_powkiddy, sizeof(png_logo_powkiddy));
+	RWops = SDL_RWFromConstMem(png_logo_powkiddy, sizeof(png_logo_powkiddy));
 #else
-	RWops = SDL_RWFromMem(png_logo_bittboy, sizeof(png_logo_bittboy));
+	RWops = SDL_RWFromConstMem(png_logo_bittboy, sizeof(png_logo_bittboy));
 #endif
 	
     logoimg = IMG_LoadPNG_RW(RWops);
@@ -60,8 +60,8 @@ int main(int argc, char* argv[]) {
 	SDL_RWops *RWops2;
 	Mix_Chunk *logosound;
 
-	RWops2 = SDL_RWFromMem(wav_logosound, sizeof(wav_logosound));
-    logosound = Mix_LoadWAV_RW(RWops2, 1);
+	RWops2 = SDL_RWFromConstMem(wav_logosound, sizeof(wav_logosound));
+    logosound = Mix_LoadWAV_RW(RWops2, 0);
     if (!logosound) {
     	printf("Error loading sound: %s\n", Mix_GetError());
     	return -1;
