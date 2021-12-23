@@ -19,4 +19,4 @@ Binary to hexadecimal converter: http://tomeko.net/online_tools/file_to_hex.php?
 
 Comma counter: https://tools.knowledgewalls.com/noofcommascounter
 
-(Don't forget to add 1 to the sum the counter gives you, for the last value in the string.)
+(Don't forget to add 1 to the total sum the counter gives you, for the last value in the string.)
