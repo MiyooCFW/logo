@@ -1,12 +1,15 @@
-CHAINPREFIX=/opt/buildroot-bittboy/output/host
-CROSS_COMPILE=$(CHAINPREFIX)/bin/arm-miyoo-linux-musleabi-
+#CHAINPREFIX ?= /opt/buildroot-bittboy/output/host
+#CROSS_COMPILE ?= $(CHAINPREFIX)/bin/arm-miyoo-linux-musleabi-
+#SYSROOT ?= $(CHAINPREFIX)/arm-miyoo-linux-musleabi/sysroot
+CHAINPREFIX ?= /opt/miyoo
+CROSS_COMPILE ?= $(CHAINPREFIX)/bin/arm-buildroot-linux-musleabi-
+SYSROOT ?= $(CHAINPREFIX)/arm-buildroot-linux-musleabi/sysroot
 
 BUILDTIME=$(shell date +'\"%Y-%m-%d %H:%M\"')
 
 CC = $(CROSS_COMPILE)gcc
 CXX = $(CROSS_COMPILE)g++
 STRIP = $(CROSS_COMPILE)strip
-SYSROOT     := $(CHAINPREFIX)/arm-miyoo-linux-musleabi/sysroot
 SDL_CFLAGS  := $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
 
 OUTPUTNAME = boot-logo
