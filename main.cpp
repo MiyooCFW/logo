@@ -73,7 +73,19 @@ int main(int argc, char* argv[]) {
 	uint32_t color = SDL_MapRGB(screen->format, R, G, B);
 	SDL_Rect rect;
 	SDL_Rect dstrect;
+	SDL_Event event;
 	for (int i = 0 - logoimg->h - ANIMDELAY; i <= dest_y; i = i + ANIMSPEED) {
+		while (SDL_PollEvent(&event)) {
+			switch (event.type) {
+				case SDL_KEYDOWN:
+					switch(event.key.keysym.sym) {
+						case SDLK_LCTRL: // "B" button on PocketGO
+					exit(0);
+					break;
+					}
+					break;
+			}
+		}
 		rect.x = 0;
 		rect.y = 0;
 		rect.w = screen->w;
