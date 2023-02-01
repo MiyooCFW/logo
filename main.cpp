@@ -73,7 +73,15 @@ int main(int argc, char* argv[]) {
 	uint32_t color = SDL_MapRGB(screen->format, R, G, B);
 	SDL_Rect rect;
 	SDL_Rect dstrect;
+	SDL_Event event;
 	for (int i = 0 - logoimg->h - ANIMDELAY; i <= dest_y; i = i + ANIMSPEED) {
+		while (SDL_PollEvent(&event)) {
+			switch (event.type) {
+				case SDL_KEYDOWN:
+					exit(0);
+					break;
+			}
+		}
 		rect.x = 0;
 		rect.y = 0;
 		rect.w = screen->w;
@@ -86,6 +94,15 @@ int main(int argc, char* argv[]) {
 		SDL_BlitSurface(logoimg, NULL, screen, &dstrect);
 		if (i == dest_y) {
 			Mix_PlayChannel(-1, logosound, 0);
+			while(1) {
+				while (SDL_PollEvent(&event)) {
+					switch (event.type) {
+						case SDL_KEYDOWN:
+							exit(0);
+							break;
+					}
+				}
+			}
 		}
 		while (curr_time < old_time + 16) {
 			curr_time = SDL_GetTicks();
