@@ -78,11 +78,7 @@ int main(int argc, char* argv[]) {
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
 				case SDL_KEYDOWN:
-					switch(event.key.keysym.sym) {
-						case SDLK_LCTRL: // "B" button on PocketGO
 					exit(0);
-					break;
-					}
 					break;
 			}
 		}
@@ -98,6 +94,15 @@ int main(int argc, char* argv[]) {
 		SDL_BlitSurface(logoimg, NULL, screen, &dstrect);
 		if (i == dest_y) {
 			Mix_PlayChannel(-1, logosound, 0);
+			while(1) {
+				while (SDL_PollEvent(&event)) {
+					switch (event.type) {
+						case SDL_KEYDOWN:
+							exit(0);
+							break;
+					}
+				}
+			}
 		}
 		while (curr_time < old_time + 16) {
 			curr_time = SDL_GetTicks();
