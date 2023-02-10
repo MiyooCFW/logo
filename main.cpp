@@ -30,6 +30,17 @@
 
 //---------------------------------------------------//
 
+void exit_event() {
+	SDL_Event event;
+	while (SDL_PollEvent(&event)) {
+		switch (event.type) {
+			case SDL_KEYDOWN:
+				exit(0);
+				break;
+		}
+	}
+}
+
 
 int main(int argc, char* argv[]) {
 	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) != 0) {
@@ -77,13 +88,7 @@ int main(int argc, char* argv[]) {
 	SDL_Rect dstrect;
 	SDL_Event event;
 	for (int i = 0 - logoimg->h - ANIMDELAY; i <= dest_y; i = i + ANIMSPEED) {
-		while (SDL_PollEvent(&event)) {
-			switch (event.type) {
-				case SDL_KEYDOWN:
-					exit(0);
-					break;
-			}
-		}
+		exit_event();
 		rect.x = 0;
 		rect.y = 0;
 		rect.w = screen->w;
@@ -105,24 +110,12 @@ int main(int argc, char* argv[]) {
 	}
 	
 	while(Mix_Playing(-1)) {
-		while (SDL_PollEvent(&event)) {
-			switch (event.type) {
-				case SDL_KEYDOWN:
-					exit(0);
-					break;
-			}
-		}
+		exit_event();
 	}
 	
 	for (int j = 0 ; j < (sqrt(2+8*ENDDELAY)-1)/2; j++){
 		SDL_Delay(j);
-		while (SDL_PollEvent(&event)) {
-			switch (event.type) {
-				case SDL_KEYDOWN:
-					exit(0);
-					break;
-			}
-		}
+		exit_event();
 	}
 
 	SDL_FreeRW(RWops);
