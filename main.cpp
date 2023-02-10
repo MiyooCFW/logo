@@ -2,6 +2,8 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
 
+#include <cmath>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "assets.h"
@@ -94,15 +96,6 @@ int main(int argc, char* argv[]) {
 		SDL_BlitSurface(logoimg, NULL, screen, &dstrect);
 		if (i == dest_y) {
 			Mix_PlayChannel(-1, logosound, 0);
-			while(1) {
-				while (SDL_PollEvent(&event)) {
-					switch (event.type) {
-						case SDL_KEYDOWN:
-							exit(0);
-							break;
-					}
-				}
-			}
 		}
 		while (curr_time < old_time + 16) {
 			curr_time = SDL_GetTicks();
@@ -110,8 +103,29 @@ int main(int argc, char* argv[]) {
 		old_time = curr_time;
 		SDL_Flip(screen);
 	}
-
-	SDL_Delay(ENDDELAY);
+	
+	int i;
+	
+	while(Mix_Playing(-1)) {
+		while (SDL_PollEvent(&event)) {
+			switch (event.type) {
+				case SDL_KEYDOWN:
+					exit(0);
+					break;
+			}
+		}
+	}
+	
+	for (i=1 ; i <= sqrt(ENDDELAY); i++){
+		SDL_Delay(i);
+		while (SDL_PollEvent(&event)) {
+			switch (event.type) {
+				case SDL_KEYDOWN:
+					exit(0);
+					break;
+			}
+		}
+	}
 
 	SDL_FreeRW(RWops);
 	SDL_FreeRW(RWops2);
