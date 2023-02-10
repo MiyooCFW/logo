@@ -104,8 +104,6 @@ int main(int argc, char* argv[]) {
 		SDL_Flip(screen);
 	}
 	
-	int i;
-	
 	while(Mix_Playing(-1)) {
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
@@ -116,8 +114,8 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	
-	for (i=1 ; i < (sqrt(2+8*ENDDELAY)-1)/2; i++){
-		SDL_Delay(i);
+	for (int j = 0 ; j < (sqrt(2+8*ENDDELAY)-1)/2; j++){
+		SDL_Delay(j);
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
 				case SDL_KEYDOWN:
