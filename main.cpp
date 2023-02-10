@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	
-	for (i=1 ; i <= sqrt(ENDDELAY); i++){
+	for (i=1 ; i < (sqrt(2+8*ENDDELAY)-1)/2; i++){
 		SDL_Delay(i);
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
