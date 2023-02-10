@@ -2,6 +2,8 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
 
+#include <cmath>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "assets.h"
@@ -27,6 +29,17 @@
 #define ANIMSPEED 1
 
 //---------------------------------------------------//
+
+void exit_event() {
+	SDL_Event event;
+	while (SDL_PollEvent(&event)) {
+		switch (event.type) {
+			case SDL_KEYDOWN:
+				exit(0);
+				break;
+		}
+	}
+}
 
 
 int main(int argc, char* argv[]) {
@@ -75,13 +88,7 @@ int main(int argc, char* argv[]) {
 	SDL_Rect dstrect;
 	SDL_Event event;
 	for (int i = 0 - logoimg->h - ANIMDELAY; i <= dest_y; i = i + ANIMSPEED) {
-		while (SDL_PollEvent(&event)) {
-			switch (event.type) {
-				case SDL_KEYDOWN:
-					exit(0);
-					break;
-			}
-		}
+		exit_event();
 		rect.x = 0;
 		rect.y = 0;
 		rect.w = screen->w;
@@ -94,15 +101,6 @@ int main(int argc, char* argv[]) {
 		SDL_BlitSurface(logoimg, NULL, screen, &dstrect);
 		if (i == dest_y) {
 			Mix_PlayChannel(-1, logosound, 0);
-			while(1) {
-				while (SDL_PollEvent(&event)) {
-					switch (event.type) {
-						case SDL_KEYDOWN:
-							exit(0);
-							break;
-					}
-				}
-			}
 		}
 		while (curr_time < old_time + 16) {
 			curr_time = SDL_GetTicks();
@@ -110,8 +108,15 @@ int main(int argc, char* argv[]) {
 		old_time = curr_time;
 		SDL_Flip(screen);
 	}
-
-	SDL_Delay(ENDDELAY);
+	
+	while(Mix_Playing(-1)) {
+		exit_event();
+	}
+	
+	for (int j = 0 ; j < (sqrt(2+8*ENDDELAY)-1)/2; j++){
+		SDL_Delay(j);
+		exit_event();
+	}
 
 	SDL_FreeRW(RWops);
 	SDL_FreeRW(RWops2);
