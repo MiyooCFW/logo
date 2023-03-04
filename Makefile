@@ -8,7 +8,7 @@ SDL_CFLAGS  := `sdl-config --cflags`
 
 OUTPUTNAME = boot-logo
 
-DEFINES = -DHAVE_STDINT_H -DVERSION_BITTBOY
+DEFINES = -DHAVE_STDINT_H -DVERSION_MIYOO
 INCLUDES = -Iinclude $(SDL_CFLAGS)
 EXTRA_LDFLAGS = -lmpg123 -Wl,--as-needed -Wl,--gc-sections -flto -s
 
