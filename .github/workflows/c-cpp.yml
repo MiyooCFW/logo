@@ -32,3 +32,10 @@ jobs:
         name: PowKiddy boot logo
         path: boot-logo
         if-no-files-found: error # 'error', 'warn', 'ignore'; defaults to `warn`
+    - name: build Miyoo
+      run: make -f Makefile.powkiddy clean; make -f Makefile.miyoo
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Miyoo boot logo
+        path: boot-logo
+        if-no-files-found: error # 'error', 'warn', 'ignore'; defaults to `warn`

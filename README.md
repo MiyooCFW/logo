@@ -17,6 +17,6 @@ Hexadecimal to binary converter: http://tomeko.net/online_tools/hex_to_file.php?
 
 Binary to hexadecimal converter: http://tomeko.net/online_tools/file_to_hex.php?lang=en
 
-Comma counter: https://tools.knowledgewalls.com/noofcommascounter
+Comma counter: https://tools.knowledgewalls.com/noofcommascounter or https://www.8nog.com/counter/?hl=en
 
 (Don't forget to add 1 to the total sum the counter gives you, for the last value in the string.)

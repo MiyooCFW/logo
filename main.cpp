@@ -58,8 +58,10 @@ int main(int argc, char* argv[]) {
 	RWops = SDL_RWFromConstMem(png_logo_pocketgo, sizeof(png_logo_pocketgo));
 #elif VERSION_POWKIDDY
 	RWops = SDL_RWFromConstMem(png_logo_powkiddy, sizeof(png_logo_powkiddy));
-#else
+#elif VERSION_BITTBOY
 	RWops = SDL_RWFromConstMem(png_logo_bittboy, sizeof(png_logo_bittboy));
+#else
+	RWops = SDL_RWFromConstMem(png_logo_miyoo, sizeof(png_logo_miyoo));
 #endif
 	
     logoimg = IMG_LoadPNG_RW(RWops);
