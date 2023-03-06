@@ -39,3 +39,10 @@ jobs:
         name: Miyoo boot logo
         path: boot-logo
         if-no-files-found: error # 'error', 'warn', 'ignore'; defaults to `warn`
+    - name: build Generic
+      run: make -f Makefile.miyoo clean; make -f Makefile.generic
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Generic boot logo
+        path: boot-logo
+        if-no-files-found: error # 'error', 'warn', 'ignore'; defaults to `warn`

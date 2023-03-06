@@ -60,6 +60,8 @@ int main(int argc, char* argv[]) {
 	RWops = SDL_RWFromConstMem(png_logo_powkiddy, sizeof(png_logo_powkiddy));
 #elif VERSION_BITTBOY
 	RWops = SDL_RWFromConstMem(png_logo_bittboy, sizeof(png_logo_bittboy));
+#elif VERSION_GENERIC
+	RWops = SDL_RWFromConstMem(png_logo_generic, sizeof(png_logo_generic));
 #else
 	RWops = SDL_RWFromConstMem(png_logo_miyoo, sizeof(png_logo_miyoo));
 #endif
