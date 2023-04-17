@@ -28,7 +28,7 @@ jobs:
         make -f Makefile.pocketgo ; mkdir pocketgo ; mv boot-logo ./pocketgo
         make -f Makefile.powkiddy ; mkdir powkiddy ; mv boot-logo ./powkiddy
         make -f Makefile.miyoo ; mkdir miyoo ; mv boot-logo ./miyoo
-        make -f Makefile.generic ; mkdir generic ; mv boot-logo ./generic
+        make -f Makefile.generic ; mkdir generic ; cp boot-logo ./generic
         make -f Makefile clean
     - uses: actions/upload-artifact@v3
       with:
