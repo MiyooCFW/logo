@@ -36,3 +36,28 @@ jobs:
         name: Boot-logos (uClibc)
         path: ${{ inputs.submodule || '.' }}/bootlogo
         if-no-files-found: error # 'error', 'warn', 'ignore'; defaults to `warn`
+
+  build-modern:
+    name: boot logos for MiyooCFW (musl)
+    runs-on: ubuntu-22.04
+    container:
+      image: miyoocfw/toolchain-shared-musl:master
+    steps:
+    - run: echo "submodule ${{ inputs.submodule }} on ${{ github.event }}"
+    - uses: actions/checkout@v3
+    - if: inputs.submodule
+      run: git submodule update --init --depth 1 -- ${{ inputs.submodule }}
+    - name: build BittBoy
+      run: |
+        cd ${{ inputs.submodule || '.' }} && mkdir bootlogo
+        make -f Makefile.bittboy ; mkdir bootlogo/bittboy ; mv boot-logo ./bootlogo/bittboy
+        make -f Makefile.pocketgo ; mkdir bootlogo/pocketgo ; mv boot-logo ./bootlogo/pocketgo
+        make -f Makefile.powkiddy ; mkdir bootlogo/powkiddy ; mv boot-logo ./bootlogo/powkiddy
+        make -f Makefile.miyoo ; mkdir bootlogo/miyoo ; mv boot-logo ./bootlogo//miyoo
+        make -f Makefile.generic ; mkdir bootlogo/generic ; cp boot-logo ./bootlogo/generic
+        make -f Makefile clean
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Boot-logos (musl)
+        path: ${{ inputs.submodule || '.' }}/bootlogo
+        if-no-files-found: error # 'error', 'warn', 'ignore'; defaults to `warn`
