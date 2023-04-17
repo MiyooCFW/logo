@@ -33,5 +33,5 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: Boot-logos (uClibc)
-        path: ${{ inputs.submodule || '.' }}/boot-logo
+        path: ${{ inputs.submodule || '.' }}/boot-logo/*
         if-no-files-found: error # 'error', 'warn', 'ignore'; defaults to `warn`
