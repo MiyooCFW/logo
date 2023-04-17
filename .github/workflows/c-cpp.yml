@@ -12,48 +12,26 @@ on:
         type: string
 
 jobs:   
-  build-modern:
-    name: boot logos for MiyooCFW (musl libc)
-    runs-on: ubuntu-20.04
+  build-legacy:
+    name: boot logos for MiyooCFW (uClibc)
+    runs-on: ubuntu-22.04
     container:
-      image: nfriedly/miyoo-toolchain:latest
+      image: miyoocfw/toolchain-shared-uclibc:master
     steps:
     - run: echo "submodule ${{ inputs.submodule }} on ${{ github.event }}"
     - uses: actions/checkout@v3
     - if: inputs.submodule
       run: git submodule update --init --depth 1 -- ${{ inputs.submodule }}
     - name: build BittBoy
-      run: cd ${{ inputs.submodule || '.' }} && make -f Makefile.bittboy
+      run: |
+        cd ${{ inputs.submodule || '.' }} && make -f Makefile.bittboy ; mkdir bittboy ; mv boot-logo ./bittboy
+        make -f Makefile.pocketgo ; mkdir pocketgo ; mv boot-logo ./pocketgo
+        make -f Makefile.powkiddy ; mkdir powkiddy ; mv boot-logo ./powkiddy
+        make -f Makefile.miyoo ; mkdir miyoo ; mv boot-logo ./miyoo
+        make -f Makefile.generic ; mkdir generic ; mv boot-logo ./generic
+        make -f Makefile clean
     - uses: actions/upload-artifact@v3
       with:
-        name: BittBoy boot logo
-        path: ${{ inputs.submodule || '.' }}/boot-logo
-        if-no-files-found: error # 'error', 'warn', 'ignore'; defaults to `warn`
-    - name: build PocketGO
-      run: cd ${{ inputs.submodule || '.' }} && make -f Makefile.bittboy clean; make -f Makefile.pocketgo
-    - uses: actions/upload-artifact@v3
-      with:
-        name: PocketGO boot logo
-        path: ${{ inputs.submodule || '.' }}/boot-logo
-        if-no-files-found: error # 'error', 'warn', 'ignore'; defaults to `warn`
-    - name: build PowKiddy
-      run: cd ${{ inputs.submodule || '.' }} && make -f Makefile.pocketgo clean; make -f Makefile.powkiddy
-    - uses: actions/upload-artifact@v3
-      with:
-        name: PowKiddy boot logo
-        path: ${{ inputs.submodule || '.' }}/boot-logo
-        if-no-files-found: error # 'error', 'warn', 'ignore'; defaults to `warn`
-    - name: build Miyoo
-      run: cd ${{ inputs.submodule || '.' }} && make -f Makefile.powkiddy clean; make -f Makefile.miyoo
-    - uses: actions/upload-artifact@v3
-      with:
-        name: Miyoo boot logo
-        path: ${{ inputs.submodule || '.' }}/boot-logo
-        if-no-files-found: error # 'error', 'warn', 'ignore'; defaults to `warn`
-    - name: build Generic
-      run: cd ${{ inputs.submodule || '.' }} && make -f Makefile.miyoo clean; make -f Makefile.generic
-    - uses: actions/upload-artifact@v3
-      with:
-        name: Generic boot logo
+        name: Boot-logos (uClibc)
         path: ${{ inputs.submodule || '.' }}/boot-logo
         if-no-files-found: error # 'error', 'warn', 'ignore'; defaults to `warn`
