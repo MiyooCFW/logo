@@ -30,17 +30,21 @@
 
 //---------------------------------------------------//
 
+void quit() {
+	Mix_CloseAudio();
+	SDL_Quit();
+}
+
 void exit_event() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 			case SDL_KEYDOWN:
-				exit(0);
+				quit();
 				break;
 		}
 	}
 }
-
 
 int main(int argc, char* argv[]) {
 	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) != 0) {
@@ -126,8 +130,7 @@ int main(int argc, char* argv[]) {
 	SDL_FreeRW(RWops2);
 	SDL_FreeSurface(logoimg);
 	Mix_FreeChunk(logosound);
-	Mix_CloseAudio();
-	SDL_Quit();
+	quit();
 
 	return 0;
 }
