@@ -19,7 +19,7 @@ jobs:
       image: miyoocfw/toolchain-shared-uclibc:master
     steps:
     - run: echo "submodule ${{ inputs.submodule }} on ${{ github.event }}"
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - if: inputs.submodule
       run: git submodule update --init --depth 1 -- ${{ inputs.submodule }}
     - name: build all logos
@@ -30,7 +30,7 @@ jobs:
         make -f Makefile.powkiddy ; mkdir bootlogo/powkiddy ; cp boot-logo ./bootlogo/powkiddy ; make -f Makefile clean
         make -f Makefile.miyoo ; mkdir bootlogo/miyoo ; cp boot-logo ./bootlogo/miyoo ; make -f Makefile clean
         make -f Makefile.generic ; mkdir bootlogo/generic ; cp boot-logo ./bootlogo/generic ; make -f Makefile clean
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: Boot-logos (uClibc)
         path: ${{ inputs.submodule || '.' }}/bootlogo
@@ -43,7 +43,7 @@ jobs:
       image: miyoocfw/toolchain-shared-musl:master
     steps:
     - run: echo "submodule ${{ inputs.submodule }} on ${{ github.event }}"
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - if: inputs.submodule
       run: git submodule update --init --depth 1 -- ${{ inputs.submodule }}
     - name: build all logos
@@ -54,7 +54,7 @@ jobs:
         make -f Makefile.powkiddy ; mkdir bootlogo/powkiddy ; cp boot-logo ./bootlogo/powkiddy ; make -f Makefile clean
         make -f Makefile.miyoo ; mkdir bootlogo/miyoo ; cp boot-logo ./bootlogo/miyoo ; make -f Makefile clean
         make -f Makefile.generic ; mkdir bootlogo/generic ; cp boot-logo ./bootlogo/generic ; make -f Makefile clean
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: Boot-logos (musl)
         path: ${{ inputs.submodule || '.' }}/bootlogo
