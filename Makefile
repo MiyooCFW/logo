@@ -1,10 +1,10 @@
 
 BUILDTIME=$(shell date +'\"%Y-%m-%d %H:%M\"')
 
-CC = gcc
-CXX = g++
-STRIP = strip
-SDL_CFLAGS  := `sdl-config --cflags`
+CC = $(CROSS_COMPILE)gcc
+CXX = $(CROSS_COMPILE)g++
+STRIP = $(CROSS_COMPILE)strip
+SDL_CFLAGS  := $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
 
 OUTPUTNAME = boot-logo
 

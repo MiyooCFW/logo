@@ -1,11 +1,30 @@
 # logo
-Main repository at https://github.com/TriForceX/MiyooCFW
 
 **Instructions:**
 
-After compiling the Miyoo CFW toolchain (https://github.com/TriForceX/MiyooCFW/wiki/Making-Games) on your system, edit the appropriate "Makefile" in your copy of this repository to point it to where you've installed the toolchain (and rename the file to just "Makefile"), and simply run the "make" command in the terminal (while inside the source directory) to build the new "boot-logo" binary.
+You can customize your boot-logo output by modyfing following files:
+- `$HOME/logo.png` - scrolling logo image
+- `$HOME/logo.wav` - scrolling logo sound
+- `$HOME/logobg.png` - background image
 
-You'll need to convert your logo image into a "0x" formatted hexadecimal data string and add it to "assets.h". (The same goes for the sound file.) You'll also need to count the total number of "initialisers", the comma separated values, in your hexadecimal string, and write their total number into the square brackets for the header identifier that contains your file.
+For images use PNG, for sound WAV (stereo, 22050 Hz, signed 16-bit PCM)
+
+**Building:**
+- native linux build:
+```
+make clean
+make
+```
+- cross-compile for miyoo:
+```
+export SYSROOT=/opt/miyoo/arm-miyoo-linux-uclibcgnueabi/sysroot
+export CROSS_COMPILE=/opt/miyoo/usr/bin/arm-linux-
+make clean
+make
+```
+You'll need to convert your logo image into a "0x" formatted hexadecimal data string and add it to "assets.h". (The same goes for the sound file.) 
+You have to also count the total number of "initialisers", the comma separated values, in your hexadecimal string, and write their total number 
+into the square brackets for the header identifier that contains your file.
 
 **Tips:**
 
