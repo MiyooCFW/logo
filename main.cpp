@@ -31,23 +31,18 @@
 
 //---------------------------------------------------//
 
-void quit() {
-	Mix_CloseAudio();
-	SDL_Quit();
-}
+SDL_RWops *RWops;
+SDL_Surface *logoimg;
+SDL_Surface *screen;
+SDL_RWops *RWops2;
+Mix_Chunk *logosound;
 
-void exit_event() {
-	SDL_Event event;
-	while (SDL_PollEvent(&event)) {
-		switch (event.type) {
-			case SDL_KEYDOWN:
-				quit();
-				break;
-		}
-	}
-}
+void quit();
+void input_poll();
 
 int main(int argc, char* argv[]) {
+	bool quit_app = false;
+
 	float animdel, enddel;
 	int animfps;
 	bool args = true;
@@ -98,12 +93,9 @@ int main(int argc, char* argv[]) {
 		printf("Unable to initialize SDL: %s\n", SDL_GetError());
 		return -1;
 	}
-	SDL_Surface *screen;
 
 	screen = SDL_SetVideoMode(WIDTH, HEIGHT, 16, SDL_SWSURFACE);
 	SDL_ShowCursor(SDL_DISABLE);
-	SDL_RWops *RWops;
-	SDL_Surface *logoimg;
 
 	if (FILE *f = fopen(logoimg_path, "r")) {
 	 	RWops = SDL_RWFromFile(logoimg_path, "rb");
@@ -129,8 +121,6 @@ int main(int argc, char* argv[]) {
 
 	Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 1024);
 	Mix_AllocateChannels(2);
-	SDL_RWops *RWops2;
-	Mix_Chunk *logosound;
 
 	if (FILE *f = fopen(logosound_path, "r")) {
 		RWops2 = SDL_RWFromFile(logosound_path, "rb");
@@ -159,8 +149,8 @@ int main(int argc, char* argv[]) {
 	} else {
 		printf("Didn't find PNG in %s - using default background\n", logobg_path);
 	}
-	for (int i = 0 - logoimg->h - animdel; i <= dest_y; i = i + animfps) {
-		exit_event();
+	for (int i = 0 - logoimg->h - animdel; i <= dest_y && (!quit_app); i = i + animfps) {
+		input_poll();
 		rect.x = 0;
 		rect.y = 0;
 		rect.w = screen->w;
@@ -185,20 +175,40 @@ int main(int argc, char* argv[]) {
 		SDL_Flip(screen);
 	}
 	
-	while(Mix_Playing(-1)) {
-		exit_event();
+	while(Mix_Playing(-1) && (!quit_app)) {
+		input_poll();
 	}
 	
-	for (int j = 0 ; j < (sqrt(2+8*enddel)-1)/2; j++){
+	for (int j = 0 ; j < (sqrt(2+8*enddel)-1)/2 && (!quit_app); j++){
+		input_poll();
 		SDL_Delay(j);
-		exit_event();
 	}
 
-	SDL_FreeRW(RWops);
-	SDL_FreeRW(RWops2);
-	SDL_FreeSurface(logoimg);
-	Mix_FreeChunk(logosound);
 	quit();
 
 	return 0;
+}
+
+void quit() {
+	SDL_FreeRW(RWops);
+	SDL_FreeRW(RWops2);
+	SDL_FreeSurface(logoimg);
+	SDL_FreeSurface(screen);
+	Mix_FreeChunk(logosound);
+	Mix_CloseAudio();
+	SDL_Quit();
+}
+
+void input_poll() {
+	SDL_Event event;
+	while (SDL_PollEvent(&event)) {
+		switch (event.type) {
+			case SDL_KEYDOWN:
+				quit_app = true;
+				break;
+			case SDL_QUIT:
+				quit_app = true;
+				break;			
+		}
+	}
 }
