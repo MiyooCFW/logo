@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
 #include "assets.h"
 
 //------------------- PARAMETERS --------------------//
@@ -47,6 +48,43 @@ void exit_event() {
 }
 
 int main(int argc, char* argv[]) {
+	float animdel, enddel;
+	int animfps;
+	bool args = true;
+	char* str;
+	float argfloat[3];
+	memset(&argfloat, 0, sizeof(argfloat));
+
+	if (argc == 1) {
+		args = false;
+	} else if (argc == 4) {
+		for (size_t i = 1; i < argc; ++i) {
+			argfloat[i] = strtof(argv[i], &str);
+			if (*str != '\0') {
+				fprintf(stderr, "Invalid argument: %s\n", argv[i]);
+				if (args) args = false;
+			}
+		}
+	} else {
+		std::cout << "Provided bad number of arguments with: ";
+		for (int i = 1; i < argc; i++) {
+			std::cout << argv[i] << ' ';
+		}
+		std::cout << '\n';
+		args = false;
+	}
+
+	if (args) {
+		animdel = argfloat[1] * 60;
+		enddel = argfloat[2] * 60;
+		animfps = argfloat[3];
+	} else {
+		animdel = ANIMDELAY;
+		enddel = ENDDELAY;
+		animfps = ANIMSPEED;
+		printf("Usage: %s <logo_start[sec]> <logo_ending[sec]> <logo_speed[fps]>\nRunning default setup: %s %f %f %d\n", argv[0], argv[0], animdel/60, enddel/60, animfps);
+	}
+
 	char* homepath = getenv("HOME");
 	char logoimg_path[256], logosound_path[256], logobg_path[256];
 	if (homepath == NULL) {
@@ -121,7 +159,7 @@ int main(int argc, char* argv[]) {
 	} else {
 		printf("Didn't find PNG in %s - using default background\n", logobg_path);
 	}
-	for (int i = 0 - logoimg->h - ANIMDELAY; i <= dest_y; i = i + ANIMSPEED) {
+	for (int i = 0 - logoimg->h - animdel; i <= dest_y; i = i + animfps) {
 		exit_event();
 		rect.x = 0;
 		rect.y = 0;
@@ -151,7 +189,7 @@ int main(int argc, char* argv[]) {
 		exit_event();
 	}
 	
-	for (int j = 0 ; j < (sqrt(2+8*ENDDELAY)-1)/2; j++){
+	for (int j = 0 ; j < (sqrt(2+8*enddel)-1)/2; j++){
 		SDL_Delay(j);
 		exit_event();
 	}
