@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include "assets.h"
+#include "logo.h"
 
 //------------------- PARAMETERS --------------------//
 
@@ -31,25 +32,8 @@
 
 //---------------------------------------------------//
 
-SDL_RWops *RWops;
-SDL_Surface *logoimg;
-SDL_Surface *screen;
-SDL_RWops *RWops2;
-Mix_Chunk *logosound;
-
-void quit();
-void input_poll();
-
 int main(int argc, char* argv[]) {
-	bool quit_app = false;
-
-	float animdel, enddel;
-	int animfps;
-	bool args = true;
-	char* str;
-	float argfloat[3];
 	memset(&argfloat, 0, sizeof(argfloat));
-
 	if (argc == 1) {
 		args = false;
 	} else if (argc == 4) {
@@ -80,8 +64,7 @@ int main(int argc, char* argv[]) {
 		printf("Usage: %s <logo_start[sec]> <logo_ending[sec]> <logo_speed[fps]>\nRunning default setup: %s %f %f %d\n", argv[0], argv[0], animdel/60, enddel/60, animfps);
 	}
 
-	char* homepath = getenv("HOME");
-	char logoimg_path[256], logosound_path[256], logobg_path[256];
+	homepath = getenv("HOME");
 	if (homepath == NULL) {
 		printf("$HOME has not been defined in env");
 	} else {
@@ -134,21 +117,16 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-	int dest_y = (screen->h - logoimg->h) / 2;
-	uint32_t curr_time = SDL_GetTicks();
-	uint32_t old_time = curr_time;
-	uint32_t color = SDL_MapRGB(screen->format, R, G, B);
-	bool blitbg = false;
-	SDL_Rect rect;
-	SDL_Rect dstrect;
-	SDL_Event event;
-	SDL_Surface* logobg;
 	if (FILE *f = fopen(logobg_path, "r")) {
 		logobg = IMG_Load(logobg_path);
 		blitbg = true;
 	} else {
 		printf("Didn't find PNG in %s - using default background\n", logobg_path);
 	}
+
+	color = SDL_MapRGB(screen->format, R, G, B);
+	dest_y = (screen->h - logoimg->h) / 2;
+	curr_time = old_time = SDL_GetTicks();
 	for (int i = 0 - logoimg->h - animdel; i <= dest_y && (!quit_app); i = i + animfps) {
 		input_poll();
 		rect.x = 0;

@@ -23,9 +23,9 @@ CFLAGS = $(DEFINES) $(INCLUDES) $(OPT_FLAGS) -std=gnu11
 CXXFLAGS = $(DEFINES) $(INCLUDES) $(OPT_FLAGS) -std=gnu++11 
 LDFLAGS = -Wl,--start-group -lSDL -lSDL_image -lpng -ljpeg -lSDL_mixer -lfreetype -lSDL_ttf -logg -lvorbisidec -lm -pthread -lz -lstdc++ $(EXTRA_LDFLAGS) -Wl,--end-group
 
-# Redream (main engine)
+# Redream (logo engine)
 OBJS =  \
-	main.o
+	logo.o
 	
 .c.o:
 	$(CC) $(CFLAGS) -c -o $@ $< 
