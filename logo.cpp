@@ -25,7 +25,7 @@
 #define ANIMDELAY 60
 
 // time from the moment the logo stops moving and sound is played until the logo app closes (unit: frames) (60 frames = 1 sec)
-#define ENDDELAY 3000
+#define ENDDELAY 300
 
 //speed at which the logo moves (unit: pixels per frame)
 #define ANIMSPEED 1
@@ -157,7 +157,7 @@ int main(int argc, char* argv[]) {
 		input_poll();
 	}
 	
-	for (int j = 0 ; j < (sqrt(2+8*enddel)-1)/2 && (!quit_app); j++){
+	for (int j = 0 ; j < (sqrt(2+8*enddel*10)-1)/2 && (!quit_app); j++){
 		input_poll();
 		SDL_Delay(j);
 	}
