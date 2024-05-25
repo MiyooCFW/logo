@@ -1,6 +1,12 @@
 # logo
 
-**Instructions:**
+**Usage:**
+
+`boot-logo <logo_start[sec]> <logo_ending[sec]> <logo_speed[fps]>`
+
+- logo_start = delay until the logo start in [seconds]  
+- logo_ending = time from the moment the logo stops moving and sound is played until the logo app closes in [seconds]  
+- logo_speed = speed at which the logo moves in [pixels per frame]
 
 You can customize your boot-logo output by modyfing following files:
 - `$HOME/logo.png` - scrolling logo image
