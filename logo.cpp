@@ -181,12 +181,9 @@ void input_poll() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
-			case SDL_KEYDOWN:
+			case SDL_KEYDOWN: case SDL_QUIT:
 				quit_app = true;
-				break;
-			case SDL_QUIT:
-				quit_app = true;
-				break;			
+				break;	
 		}
 	}
 }
