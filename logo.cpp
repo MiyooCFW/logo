@@ -129,7 +129,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	color = SDL_MapRGB(screen->format, R, G, B);
-	dest_y = (screen->h - logoimg->h) / 2;
+	dest_y = (int)(screen->h - logoimg->h) / 2;
 	curr_time = old_time = SDL_GetTicks();
 	for (int i = 0 - logoimg->h - animdel; i <= dest_y && (!quit_app); i = i + animspeed) {
 		input_poll();
@@ -142,7 +142,7 @@ int main(int argc, char* argv[]) {
 		} else {
 			SDL_FillRect(screen, &rect, color);
 		}
-		dstrect.x = (screen->w - logoimg->w) / 2;
+		dstrect.x = (int)(screen->w - logoimg->w) / 2;
 		dstrect.y = i;
 		dstrect.w = logoimg->w;
 		dstrect.h = logoimg->h;
@@ -161,7 +161,7 @@ int main(int argc, char* argv[]) {
 		input_poll();
 	}
 	
-	for (int j = 0 ; j < (sqrt(2+8*enddel*10)-1)/2 && (!quit_app); j++){
+	for (int j = 0 ; j < (int)(sqrt(2+8*enddel*10)-1)/2 && (!quit_app); j++){
 		input_poll();
 		SDL_Delay(j);
 	}
