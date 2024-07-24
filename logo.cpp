@@ -33,12 +33,12 @@
 //---------------------------------------------------//
 
 int main(int argc, char* argv[]) {
-	memset(&argfloat, 0, sizeof(argfloat));
+	memset(&argint, 0, sizeof(argint));
 	if (argc == 1) {
 		args = false;
 	} else if (argc == 4) {
 		for (size_t i = 1; i < argc; ++i) {
-			argfloat[i] = strtof(argv[i], &str);
+			argint[i] = strtof(argv[i], &str);
 			if (*str != '\0') {
 				fprintf(stderr, "Invalid argument: %s\n", argv[i]);
 				if (args) args = false;
@@ -54,14 +54,18 @@ int main(int argc, char* argv[]) {
 	}
 
 	if (args) {
-		animdel = argfloat[1] * 60;
-		enddel = argfloat[2] * 60;
-		animfps = argfloat[3];
+		animdel = argint[1] * 60;
+		enddel = argint[2] * 60;
+		animspeed = argint[3];
 	} else {
 		animdel = ANIMDELAY;
 		enddel = ENDDELAY;
-		animfps = ANIMSPEED;
-		printf("Usage: %s <logo_start[sec]> <logo_ending[sec]> <logo_speed[fps]>\nRunning default setup: %s %f %f %d\n", argv[0], argv[0], animdel/60, enddel/60, animfps);
+		animspeed = ANIMSPEED;
+		printf("Usage: %s <logo_start[sec]> <logo_ending[sec]> <logo_speed[ppf]>\nRunning default setup: %s", argv[0], argv[0]);
+		if ((int)animdel%60 != 0 || (int)enddel%60 != 0)
+			printf(" %i.%i %i.%i %i\n", (int)animdel/60, (int)animdel%60, (int)enddel/60, (int)enddel%60, animspeed);
+		else
+			printf(" %i %i %i\n", (int)animdel/60, (int)enddel/60, animspeed);
 	}
 
 	homepath = getenv("HOME");
@@ -127,7 +131,7 @@ int main(int argc, char* argv[]) {
 	color = SDL_MapRGB(screen->format, R, G, B);
 	dest_y = (screen->h - logoimg->h) / 2;
 	curr_time = old_time = SDL_GetTicks();
-	for (int i = 0 - logoimg->h - animdel; i <= dest_y && (!quit_app); i = i + animfps) {
+	for (int i = 0 - logoimg->h - animdel; i <= dest_y && (!quit_app); i = i + animspeed) {
 		input_poll();
 		rect.x = 0;
 		rect.y = 0;
