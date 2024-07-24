@@ -54,18 +54,16 @@ int main(int argc, char* argv[]) {
 	}
 
 	if (args) {
-		animdel = argint[1] * 60;
-		enddel = argint[2] * 60;
+		animdel = argint[1];
+		enddel = argint[2];
 		animspeed = argint[3];
 	} else {
 		animdel = ANIMDELAY;
 		enddel = ENDDELAY;
 		animspeed = ANIMSPEED;
-		printf("Usage: %s <logo_start[sec]> <logo_ending[sec]> <logo_speed[ppf]>\nRunning default setup: %s", argv[0], argv[0]);
-		if ((int)animdel%60 != 0 || (int)enddel%60 != 0)
-			printf(" %i.%i %i.%i %i\n", (int)animdel/60, (int)animdel%60, (int)enddel/60, (int)enddel%60, animspeed);
-		else
-			printf(" %i %i %i\n", (int)animdel/60, (int)enddel/60, animspeed);
+		printf("Usage: %s <logo_start[tick]> <logo_ending[tick]> <logo_speed[ppf]>\nRunning default setup: %s", argv[0], argv[0]);
+		printf(" %i %i %i\n", animdel, enddel, animspeed);
+		printf("tick - 1/60th of a second\nppf - pixels per frame\n");
 	}
 
 	homepath = getenv("HOME");
