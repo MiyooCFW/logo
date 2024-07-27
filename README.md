@@ -4,8 +4,8 @@
 
 `boot-logo <logo_start[tick]> <logo_ending[tick]> <logo_speed[ppf]>`
 
-- logo_start = delay until the logo start in [1/60th of a second]  
-- logo_ending = time from the moment the logo stops moving and sound is played until the logo app closes in [1/60th of a second]  
+- logo_start = delay until the logo start in [tick=¹⁄₆₀ of a second]  
+- logo_ending = time from the moment the logo stops moving and sound is played until the logo app closes in [tick=¹⁄₆₀ of a second]  
 - logo_speed = speed at which the logo moves in [pixels per frame]
 
 You can customize your boot-logo output by modyfing following files:
