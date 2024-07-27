@@ -13,10 +13,10 @@ Mix_Chunk *logosound;
 bool quit_app = false;
 
 bool args = true;
-float animdel, enddel;
-int animfps;
+int animdel, enddel;
+int animspeed;
 char* str;
-float argfloat[3];
+float argint[3];
 
 void quit();
 void input_poll();
