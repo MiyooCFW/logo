@@ -10,6 +10,7 @@ OUTPUTNAME = boot-logo
 
 DEFINES = -DHAVE_STDINT_H -DVERSION_MIYOO
 INCLUDES = -Iinclude $(SDL_CFLAGS)
+#OPT_FLAGS  = -Ofast -fdata-sections -fdata-sections -fno-common -fno-PIC -flto
 EXTRA_LDFLAGS = -lmpg123 -Wl,--as-needed -Wl,--gc-sections -flto -s
 
 CFLAGS = $(DEFINES) $(INCLUDES) $(OPT_FLAGS) -std=gnu11 
